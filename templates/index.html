@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to My World!!!</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message|safe }}</div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="HomePage" id="HomePage">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login/Sign-Up</a>
+            <a href="tools.html">Tools & Services</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="test" id="test">
+            <h1><span>This is Your Playground. Select any one of the game and play. Happy Gaming!!!</span></h1>
+            <p><span>Here you can select multi types of games like action games and strategical games as you like.</span></p>
+        </div>
+        <div class="Games-List" id="Games-List">
+            <div class="Action-Games" id="Action-Games">
+                <ul>
+                    <h2><span>Action Games</span></h2>
+                    <li>BGMI</li>
+                    <li>PUBG</li>
+                    <li>Free Fire</li>
+                </ul>
+            </div>
+            <div class="Startegy-Games" id="Startegy-Games" >
+                <ul>
+                    <h2><span>Strategy Games</span></h2>
+                    <li>Clash Of Clans</li>
+                    <li>Evony The King's Return</li>
+                    <li>Battleship Naval Empire</li>
+                </ul>
+            </div>
+        </div>
+        <!--Just for learning purpose kept google.com link
+        You Can redirect to any static page in your local or 
+        You can redirect to any webpage as well-->
+        <div class="table-data" id="table-data">
+            <a href="https://www.google.com" >Select a Game to Play</a><br><br>
+            <img src="/static/dummy.jpeg" height="500px" width="500px"><br><br>
+            <table border="1" align="center">
+                <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Data-1</td>
+                        <td>Data-2</td>
+                        <td>Data-3</td>
+                    </tr>
+                    <tr>
+                        <td>Data-1</td>
+                        <td>Data-2</td>
+                        <td>Data-3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <blockquote>Those who Learn Can teach</blockquote>
+        <div class="Feedback" id="Feedback">
+            <textarea name="Feedback" id="Feedback">Submit Feedback Here</textarea>
+        </div>
+        <script src="/static/main.js"></script>
+    </body>
+</html>

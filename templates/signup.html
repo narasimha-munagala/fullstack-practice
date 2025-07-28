@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>LoginPage</title>
+        <link rel="stylesheet" href="/static/style.css" />
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message|safe }}</div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="container">
+            <div class="toggle">
+                <a href="{{ url_for('login') }}"><button id="showLogin" onclick="toggleForm('login')">Login</button></a>
+                <a href="{{ url_for('login') }}"><button id="showSignUp" class="active" onclick="toggleForm('signup')">SignUp</button></a>
+            </div>
+            <form id="signupForm" action="/signup" method="post">
+                <h2>SignUp</h2>
+                <input type="text" name="username" placeholder="Name" required />
+                <input type="password" name="password" placeholder="Password" required minlength="6" pattern="^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$" title="Password must be at least 6 characters, include 1 uppercase letter and 1 special character." />
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required minlength="6" pattern="^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$" title="Password must be at least 6 characters, include 1 uppercase letter and 1 special character." />
+                <select name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                </select>
+                <select name="FavGame">
+                    <option value="">Slect Favourite Game :</option>
+                    <option value="BGMI">BGMI</option>
+                    <option value="PUBG">PUBG</option>
+                    <option value="FreeFire">Free Fire</option>
+                    <option value="ClashOfClans">Clash Of Clans</option>
+                    <option value="EvonyTheKing'sReturn">Evony The King's Return</option>
+                    <option value="BattleshipNavalEmpire">Battleship Naval Empire</option>
+                </select>
+                <input type="date" name="dob" placeholder="Date Of Birth" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="tel" name="phone_number" placeholder="phone-number" pattern="[0-9]{10}" required />
+                <label>
+                    <input type="checkbox" name="Terms" required>I Agree to the Terms & Conditions
+                </label>
+                <button type="submit">SignUp</button>
+                <p class="note">All fields are required.</p>
+            </form>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+        </div>
+        <script src="/static/main.js"></script>
+    </body>
+</html>

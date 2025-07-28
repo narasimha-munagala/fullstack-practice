@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>LoginPage</title>
+        <link rel="stylesheet" href="/static/style.css" />
+        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message|safe }}</div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="container">
+            <div class="toggle">
+                <a href="{{ url_for('login') }}"><button id="showLogin" class="active" onclick="toggleForm('login')">Login</button></a>
+                <a href="{{ url_for('signup') }}"><button id="showSignUp" onclick="toggleForm('signup')">SignUp</button></a>
+            </div>
+            <form id="loginForm" class="active" action="/login" method="post">
+                <h2>Login</h2>
+                <input type="email" name="email" placeholder="Email" required />
+<!-- 
+^                 # Start of string
+(?=.*[A-Z])       # At least one uppercase letter
+(?=.*[^A-Za-z0-9])# At least one special character
+.{6,}             # At least 6 characters total
+$                 # End of string
+                
+-->
+                <input type="password" name="password" placeholder="Password" required minlength="6" pattern="^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$" title="Password must be at least 6 characters, include 1 uppercase letter and 1 special character." />
+                <label>
+                    <input type="checkbox" name="Remember" required /> Remember Me
+                </label>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+        </div>
+        <script src="/static/main.js"></script>
+    </body>
+</html>
