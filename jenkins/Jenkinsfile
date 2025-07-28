@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/narasimha-munagala/fullstack-practice.git', branch:'main'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t flask-auth-app:latest .'
+            }
+        }
+        stage('SonarQube Scan') {
+            environment {
+                SONARQUBE_SCANNER_HOME = tool 'SonarScanner'
+            }
+            steps {
+                withSonarQubeEnv('MySonarQubeServer') {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+        stage('Trivy Scan') {
+            steps {
+                sh 'trivy image flask-auth-app:latest || true'
+            }
+        }
+        stage('Push to Docker Registry') {
+            steps {
+                sh 'docker tag flask-auth-app:latest localhost:5000/flask-auth-app:latest'
+                sh 'docker push localhost:5000/flask-auth-app:latest'
+            }
+        }
+        stage('Publish to JFrog') {
+            steps {
+                sh 'curl -u admin:password -T flask-auth-app.tar.gz "http://localhost:8081/artifactory/libs-release-local/flask-auth-app.tar.gz"'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
+            }
+        }
+    }
+}
